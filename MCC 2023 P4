@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> nums,dif;
+
+int solve(int i, int k) {
+    int sum = 0, rp=i;
+    
+    while (rp <= dif.size()-1) {
+        if (sum + dif[rp] <= k) {
+            sum += dif[rp];
+            rp++;
+        }
+        else {
+            return rp - i + k + 1; 
+        }
+    }
+    
+    return rp - i + k+ 1;
+}
+
+int main() {
+    int n,k,maximum = 0, temp;
+    cin >> n >> k;
+    
+    for (int i=0; i<n-k; i++) {
+        cin >> temp;
+        nums.push_back(temp);
+    }
+    
+    sort(nums.begin(), nums.end());
+    
+    for (int i=0; i<n-k-1; i++) {
+        if (nums[i] != nums[i+1]) dif.push_back(nums[i+1]-nums[i]-1);
+    }
+    
+    for (int i=0; i<dif.size()-1; i++) maximum = max(maximum,solve(i,k));
+    cout << maximum;
+    return 0;
+}
+
