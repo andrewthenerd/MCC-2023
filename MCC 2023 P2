@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> nums;
+int a,b;
+
+bool find(int k) {
+    int maximum = 0, index = 0;
+    for (int i=0; i<nums.size(); i++) {
+        if (nums[i] >= k && maximum == 0) return 0;
+        else if (nums[i] >= k) {
+            a += maximum;
+            nums[index] = 0;
+            return 1;
+        }
+        else {
+            if (nums[i] > maximum) maximum = nums[i], index = i;
+        }
+    }
+    
+    a += maximum;
+    nums[index] = 0;
+    return 1;
+}
+
+void solve() {
+    nums.clear();
+    int n,temp,count=0;
+    cin >> n >> a >> b;
+    
+    for (int i=0; i<n; i++) {
+        cin >> temp;
+        nums.push_back(temp);
+    }
+    
+    sort(nums.begin(), nums.end());
+    
+    while (a<b && count <= n) {
+        if (find(a) == 0) {
+            cout << -1 << endl;
+            return;
+        }
+        count++;
+    }
+    
+    if (count == n+1 && a < b) {
+        cout << -1 << endl;
+        return;
+    }
+    
+    cout << count << endl;
+    count++;
+    return;
+}
+
+int main() {
+    int t;
+    cin >> t;
+    
+    while (t--) solve();
+    return 0;
+}
