@@ -1,41 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> nums,dif;
-
-int solve(int i, int k) {
-    int sum = 0, rp=i;
-    
-    while (rp <= dif.size()-1) {
-        if (sum + dif[rp] <= k) {
-            sum += dif[rp];
-            rp++;
-        }
-        else {
-            return rp - i + k + 1; 
-        }
-    }
-    
-    return rp - i + k+ 1;
-}
-
 int main() {
-    int n,k,maximum = 0, temp;
-    cin >> n >> k;
+    vector<pair<int, int>> nums;
+    int n,m,t1,t2,t3,t4,maximum=0,maximum2=0,sum=0;
+    bool k = 0;
+    cin >> n >> m;
     
-    for (int i=0; i<n-k; i++) {
-        cin >> temp;
-        nums.push_back(temp);
+    for (int i=0; i<n; i++) {
+        cin >> t1 >> t2 >> t3 >> t4;
+        nums.push_back(make_pair(t1+t2,t3+t4));
     }
     
     sort(nums.begin(), nums.end());
     
-    for (int i=0; i<n-k-1; i++) {
-        if (nums[i] != nums[i+1]) dif.push_back(nums[i+1]-nums[i]-1);
+    for (int i=n-1; i>=n-m; i--) {
+        sum += nums[i].first;
+        maximum2 = max(maximum2, nums[i].second);
     }
     
-    for (int i=0; i<dif.size()-1; i++) maximum = max(maximum,solve(i,k));
-    cout << maximum;
+    for (int i=n-m-1; i>=0; i--) {
+        maximum = max(maximum, nums[i].first + nums[i].second);
+    }
+    
+    cout << max(sum + maximum2, sum - nums[n-m].first + maximum);
     return 0;
 }
-
