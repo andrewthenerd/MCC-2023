@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+
+int solve(int n, int k) {
+    while (k--) {
+        if (n%2==1) n*=3, n++;
+        else n/=2;
+    }
+    
+    return n;
+}
+
+int main() {
+    int t,sum=0,k,temp;
+    cin >> t >> k;
+    
+    while (t--) {
+        cin >> temp;
+        sum += solve(temp, k);
+    }
+    
+    cout << sum;
+    return 0;
+}
